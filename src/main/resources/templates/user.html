@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>사용자 정보 조회</title>
+    <th:block th:include="fragments/header"></th:block>
+ 	<script type="text/javascript" src="/js/main.js"></script>
+</head>
+<body>
+<th:block th:include="fragments/nav"></th:block>
+<div class="container" style="min-height: 500px">
+
+    <div class="starter-template">
+        <h1>사용자 정보 조회</h1>
+
+        <div id="feedback"></div>
+
+        <table class="table">
+		  <thead class="thead-dark">
+		    <tr>
+		      <th scope="col">아이디</th>
+		      <th scope="col">이름</th>
+		      <th scope="col">회사</th>
+		      <th scope="col">수정</th>
+		      <th scope="col">삭제</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		    <form class = "form-horizontal" id="updateform">
+		      <th scope="row"><span th:text="${id}"></span>
+		      <td><input type="text" class="form-control"
+		      		 	 id="id" name="id" th:value="${id}"/></td></th>		      
+		      <td><input type="text" class="form-control"
+		      		 	 id="name" name="name" th:value="${name}"/></td>
+		      <td><input type="text" class="form-control"
+		      		 	 id="company" name="company" th:value="${company}"/></td>    
+		      <td>
+		      	<button type="submit" id="bth-search"
+                            class="btn btn-primary btn-lg">수정</button>
+              </td>
+             </form>
+		      <td>
+	      	  <form class="form-horizontal" id="delform">
+	      		 <input type="hidden" class="form-control"
+	      		 	 id="id" name="id" th:value="${id}"/>
+	      	 	<button type="submit" id="bth-search"
+                           class="btn btn-primary btn-lg">삭제
+                   </button>
+	      	  </form>
+		      </td>  
+		    </tr>
+		    
+		  </tbody>
+		</table>
+
+    </div>
+
+</div>
+<th:block th:include="fragments/footer"></th:block>
+</body>
+</html>
