@@ -45,10 +45,11 @@ public class HomeController {
 	Model model) throws ResourceNotFoundException {
 		User user = userRepo.findById(userId)
 				.orElseThrow(() -> 
-				new ResourceNotFoundException("not found " + userId ));
-		model.addAttribute("id", "" + userId);
+				new ResourceNotFoundException("not found " + userId ));		
+		model.addAttribute("user",user);
+		/*model.addAttribute("id", "" + userId);
 		model.addAttribute("name", user.getName());
-		model.addAttribute("company", user.getCompany());
+		model.addAttribute("company", user.getCompany());*/
 		return "user";
 	}
 	@GetMapping("/regform")
@@ -56,14 +57,14 @@ public class HomeController {
 		return "regform";
 	}	    
 	@PostMapping("/users")
-	public String createUser(@Valid @RequestBody User user, Model model) {
+	public String createUser(@Valid User user, Model model) {
 		userRepo.save(user);
 		model.addAttribute("users", userRepo.findAll());
 		return "redirect:/users";
 	}
 	@PutMapping("/users/{id}") 
 	//@RequestMapping(value="/users/{id}" , method =Request.DELETE) 
-	public ResponseEntity<User> updateUserById(@PathVariable(value = "id") Long userId,  
+	public String updateUserById(@PathVariable(value = "id") Long userId,  
 			@Valid @RequestBody User userDetails, Model model)
 				throws ResourceNotFoundException {
 					User user = userRepo.findById(userId)
@@ -73,10 +74,19 @@ public class HomeController {
 					user.setCompany(userDetails.getCompany());
 					User userUpdate = userRepo.save(user);
 					
-					return ResponseEntity.ok(userUpdate);
+					 //model.addAttribute("user",userUpdate);
+					return "redirect:/users";	//업데이트가 성공하면 users에 get방식으로 moel에
+					// user어트리뷰트를 전달하면서 리다이렉션
 	}
-	@GetMapping("/disjoin")
-	public String disjoinForm(Model model) {
+	@DeleteMapping("/users/{id}")
+	public String DeleteUserById(@PathVariable(value = "id") Long userId,  
+	Model model) throws ResourceNotFoundException {
+		User user = userRepo.findById(userId)
+				.orElseThrow(() -> 
+				new ResourceNotFoundException("not found " + userId ));		
+		userRepo.delete(user);
+		model.addAttribute("name", user.getName());
+		
 		return "disjoin";
-	}	
+	}
 }
