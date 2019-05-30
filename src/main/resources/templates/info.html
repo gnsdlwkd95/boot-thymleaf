@@ -11,7 +11,7 @@
                     <div class="breadcrumb_iner text-center">
                         <div class="breadcrumb_iner_item">
 							<h2>Elements</h2>
-                            <p>Home <span>//</span>Elements</p>
+                            <p>Home <span>//</span>로그인</p>
                         </div>
                     </div>
                 </div>
@@ -19,35 +19,46 @@
         </div>
     </section>
 	<!-- End banner Area -->
-
+	
 	<div class="whole-wrap">
-		<div class="container box_1170">		
+		<div class="container box_1170">			
 			<div class="section-top-border">
-				<h3 class="mb-30">Table</h3>
-				<div class="progress-table-wrap">
-					<div class="progress-table">
-						<div class="table-head">
-							<div class="serial">#</div>
-							<div class="country">UserID</div>
-							<div class="visit">Name</div>
-							<div class="percentage">Company</div>
-						</div>
-						<div th:each="user : ${users}">
-						<div class="table-row">
-							<div class="serial">01</div>
-							<div class="country"><span th:text="${user.userId}"></span></div>
-							<div class="visit"><span th:text="${user.name}"></span></div>
-							<div class="percentage"><span th:text="${user.name}"></span></div>
-						</div>
-						</div>						
+				<div class="row">
+					<div class="col-lg-2 col-md-2 mt-sm-30">
+					</div>
+					<div class="col-lg-8 col-md-8">
+						<h3 class="mb-30">회원 정보 수정</h3>
+						<!-- 
+						<form th:action="@{'/users'}" th:method="post">
+						 -->
+						 <form th:action="@{'/users/{id}'(id=${id})}" 
+						 th:method="put" th:object="${user}"> 
+						<form action="/users" method="post" id="register_form">
+							<div class="mt-10">
+								<input type="text" name="userId" placeholder="사용자 아이디" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 아이디'" required="" class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="password" name="userPw" placeholder="사용자 암호" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 암호'" required="" class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="text" name="name" placeholder="사용자 이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 이름'" required="" class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="text" name="company" placeholder="사용자  회사" onfocus="this.placeholder = ''" onblur="this.placeholder = '사용자 회사'" required="" class="single-input">
+							</div>
+							<div class="form-group mt-3">
+				              <button type="submit" class="button button-contactForm btn_4">
+				              	수정</button>
+				            </div>
+						</form>
+					</div>
+					<div class="col-lg-2 col-md-2 mt-sm-30">
 					</div>
 				</div>
 			</div>
-			
-			
-			
 		</div>
 	</div>
+	
 	<!-- footer part start-->
     <footer class="footer-area">
         <div class="container">

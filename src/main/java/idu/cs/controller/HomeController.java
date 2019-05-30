@@ -3,6 +3,7 @@ package idu.cs.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -35,11 +36,37 @@ public class HomeController {
 	@GetMapping("/")
 	public String loadWelcome(Model model) {
 		return "index";
-	}	
-	@GetMapping("/login")
-	public String loginUser(Model model) {
+	}
+	@GetMapping("/login-form")
+	public String getLoginForm(Model model) {
 		return "login";
 	}
+	@PostMapping("/login")
+	//실제 로그인 처리 , user : 입력한 내용의 객체
+	public String loginUser(@Valid User user, HttpSession session) {
+		System.out.println("login process : ");
+		User sessionUser = userRepo.findByUserId(user.getUserId());
+		//db뒤져보기
+		if(sessionUser == null) {
+			//유저가 없으면 에러
+			System.out.println("id error : ");
+			return "redirect:/login-form";
+		}
+		if(!sessionUser.getUserPw().equals(user.getUserPw())) {
+			//입력한 패스워드와 저장된 패스워드가 같은지 비교.
+			System.out.println("pw error : ");
+			return "redirect:/login-form";
+		}
+		session.setAttribute("user", sessionUser);		
+		return "redirect:/";
+	}
+	@GetMapping("/logout")
+	public String logoutUser(HttpSession session) {
+		//session.invalidate();
+		session.removeAttribute("user");
+		return "redirect:/";
+	}
+	
 	@GetMapping("/users")
 	public String getAllUser(Model model) {
 		model.addAttribute("users", userRepo.findAll());
@@ -69,9 +96,9 @@ public class HomeController {
 		model.addAttribute("company", user.getCompany());*/
 		return "user";
 	}
-	@GetMapping("/regform")
+	@GetMapping("/register-form")
 	public String loadRegForm(Model model) {		
-		return "regform";
+		return "register";
 	}	    
 	@PostMapping("/users")
 	public String createUser(@Valid User user, Model model) {
