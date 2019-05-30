@@ -94,7 +94,7 @@ public class HomeController {
 		/*model.addAttribute("id", "" + userId);
 		model.addAttribute("name", user.getName());
 		model.addAttribute("company", user.getCompany());*/
-		return "user";
+		return "info";
 	}
 	@GetMapping("/register-form")
 	public String loadRegForm(Model model) {		
